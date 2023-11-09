@@ -22,6 +22,19 @@ app.use(cors());
 
 app.use(express.json());
 
+//Como hostear react directo desde express? Asi --> 
+//Primero le decimos a express que use todos los archivos del build de react asi:
+app.use(express.static(
+  path.join(__dirname, "../../frontend/dist")
+));
+//Luego le decimos a express que sirva todo eso desde el home
+app.get("/", (req, res) => {
+  res.sendFile(path.join(
+      __dirname, "../../frontend/dist/index.html"
+  ))
+});
+
+
 mongoose.connect('mongodb://127.0.0.1:27017/mern_image_upload', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
